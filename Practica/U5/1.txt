@@ -1,0 +1,5 @@
+a) Notamos que el primer sistem de ecuaciones tiene un 0 en la cordenada (1,1) por lo tanto esto va a generar un error de calculo si se quisies ejecutar el metodo a la hora de hacer 1/a(1,1) en el paso recursivo a la hora de despejar el x1.
+
+No veo motivos por los cuales el segundo sistema no convergería. está raro el 1.1 ya que en la iteracion haríamos 1/1.1 lo cual es un numero menor que 0 y que ademas es periodico por lo tanto no tiene una manera "buena" de expresarse en la norma iee754. pero más hallá de eso el metodo debería funcionar y converger.
+
+b)
