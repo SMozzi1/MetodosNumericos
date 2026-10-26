@@ -19,21 +19,22 @@ endfunction
 function [valor, zn, hist] = potenciaConErr(A, z0, eps, maxIter)
     hist = zeros(maxIter, 1);
     autovals = spec(A);
-    valDom = max(abs(autovals));
+    [mod_max, idx] = max(abs(autovals);
+    valDom = autovals(idx);
     w = A*z0;
-    zn = w / norm(w, %inf);
     [x, j] = max(abs(w));
+    zn = w / x;
     valor = w(j) / z0(j);
     iter = 1;
     hist(iter) = norm(valDom - valor, %inf);
     while (iter <= maxIter) & (norm(z0 - zn, %inf) > eps)
         z0 = zn;
         w = A*zn;
-        [x,j] = max(abs(w));
+        [x,j] = max(abs(w)); // equivalente a norma infinito
         valor = w(j) / zn(j);
-        zn = w / norm(w, %inf);
+        zn = w / x;
         iter = iter + 1;
-        hist(iter) = norm(valDom - valor, %inf);
+        hist(iter) = abs(valDom - valor);
     end
     hist = hist(1:iter-1);
     printf("Iteraciones %d\n", iter); 
