@@ -1,0 +1,15 @@
+// ejercicio 3
+
+function ej3()
+    A = [1 -1 ; -2 4 -2; 0 -1 1];
+    n = 3;
+    for k=0 : 10
+        disp(k+1, "es el valor de la iteracion actual");
+        eps = 1 + o,1 * k;
+        A(3,3) = eps;
+        p = poly(A, 'x');
+        autovals = roots(p);
+        disp(p, "polinomio caracteristico");
+        disp(autovals, "autovalores de A");
+    end
+endfunction
