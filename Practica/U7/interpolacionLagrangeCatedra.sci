@@ -15,25 +15,37 @@ function z = interpolLagrange(x,y)
     z = pol;
 endfunction
 
-x1 = [-2, -1,0,1,2];
-y1 = [4,-1,0,-1,4];
+function tablaD = Dk(x,y)
+    [n,m] = size(x);
+    tablaD = zeros(m,m);
+    tablaD(:,1) = y;
+    disp(x(1));
+    for i=2 : m
+        for j = i : m
+            tablaD(j,i)= (tablaD(j,i-1) - tablaD(j-1,i-1)) / (x(j)-x(j-i+1))
+        end
+    end
+endfunction
 
-interpolLagrange(x1,y1);
+function z= interpolNewton(x,y)
+    tabla = Dk(x,y);
+    disp("tabla");
+    disp(tabla);
+    D = diag(tabla)
+    [n,m] = size(D) 
+    pol = D(n);
+    for i= n-1:-1:1
+        pol1= poly(x(i),"x","roots") // (x-x_i)
+        pol = pol * pol1 + D(i)
+    end
+    z= pol
+endfunction
+
+x = [0, 0.2, 0.4, 0.6];
+y = [1.0, 1.2214, 1.4918, 1.8221];
+
+polNew = interpolNewton(x,y);
+res = horner(polNew, 1/3);
+disp(res);
 
 
-// ejercicio 5
-
-x = [1 2 3];
-L1 = LK(x,1);
-L2 = LK(x,2);
-L3 = LK(x,3);
-
-c1 = horner(L1,2.5)*3;
-c2 = horner(L2,2.5)*3;
-c3 = horner(L3,2.5);
-k = (3-c1-c2) / c3;
-
-xx = [0 1 2 3];
-yy = [1 3 3 k];
-pl = interpolLagrange(xx,yy);
-res = horner(pl,2.5);
