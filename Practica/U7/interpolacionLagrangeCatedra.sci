@@ -115,8 +115,30 @@ pol =  interpolNewtonDiag(x,D);
 disp("polinomio calculado", pol);
 disp("f en 0", horner(pol, 0));
 
+//Ejercicio 9 (chat);
 
+xx = linspace(-5, 5, 500);
+f_xx = 1 ./ (1 + xx.^2);
 
+grados = [2, 4, 6, 10, 14];
+colores = ["b-", "g-", "r-", "m-", "k-"]; // Azul, verde, rojo, magenta y negro
+
+clf();
+for k = 1:length(grados)
+    n = grados(k);
+    xn = linspace(-5, 5, n + 1);
+    yn = 1 ./ (1 + xn.^2);
+    
+    pn_x = interpolNewton(xn, yn);
+    pn_xx = horner(pn_x,xx);
+    plot(xx, f_xx - pn_xx, colores(k), "LineWidth", 1.5);
+end
+
+xgrid();
+title("Error de interpolación f(x) - P_n(x) en [-5, 5]");
+xlabel("x");
+ylabel("Error");
+legend(["n=2", "n=4", "n=6", "n=10", "n=14"]);
 
 
 
