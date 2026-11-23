@@ -41,6 +41,28 @@ function z= interpolNewton(x,y)
     z= pol
 endfunction
 
+function [p,r] = polCheby(n)
+    //r = zeros(n+1)
+    cheb = zeros(n+1,1)
+    cheb(1) = 1
+    cheb(2) = poly([0,1],"x","coeff")
+    disp("policheby2",cheb(2))
+    for i=3:n+1
+        cheb(i)= 2 * cheb(2) *cheb(i-1) - cheb(i-2);
+    end
+    p= cheb(n+1)
+    r = roots(p)
+    disp("polinomio de cheby",p)
+endfunction
+
+function xt = Tl(x,a,b)
+    [n,m] = size(x)
+    xt=zeros(1,m)
+    for i=1:m
+        xt(i) = ((b+a) + x(i)*(b-a))/2;
+    end
+endfunction
+
 x = [0, 0.2, 0.4, 0.6];
 y = [1.0, 1.2214, 1.4918, 1.8221];
 
@@ -67,6 +89,8 @@ function w = calcErr(p,x,cot)
         w = w*abs(p-x(i));
     end
 endfunction
+
+
 
 //ejercicio 4
 x = [2.0 2.1 2.3 2.4 2.5];
@@ -108,7 +132,7 @@ function z= interpolNewtonDiag(x,D)
     end
     z= pol
 endfunction
-
+/*
 x = [-1 1 2 4];
 D = [2 1 -2 2];
 pol =  interpolNewtonDiag(x,D);
@@ -139,6 +163,44 @@ title("Error de interpolación f(x) - P_n(x) en [-5, 5]");
 xlabel("x");
 ylabel("Error");
 legend(["n=2", "n=4", "n=6", "n=10", "n=14"]);
+*/
+//Ejercicio 10
+[p,x] = polCheby(4)
+
+y=zeros(4,1)
+
+for i=1:4
+    y(i) = exp(x(i))
+end
+
+pol = interpolNewton(x',y)
+
+xn = linspace(-1,1,500)
+y1 = horner(pol,xn)
+y2 = exp(xn)
+
+//plot(xn,y2 -y1)
+
+
+//ejercicio 11
+
+[p,x] = polCheby(4)
+
+xt = Tl(x',0,%pi /2);
+disp("xt",xt)
+yt= zeros(1,4)
+
+for i=1:4
+    yt(i) = cos(xt(i))
+end
+
+pol = interpolNewton(xt,yt)
+disp(pol)
+
+
+
+
+
 
 
 
